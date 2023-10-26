@@ -1,9 +1,20 @@
 // import React from 'react';
 
 import { Link } from "react-router-dom";
-import user from "../../../assets/user.png";
+import userDefaultPic from "../../../assets/user.png";
+import { useContext } from "react";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  console.log(user);
+
+  const handleSingOut = () => {
+    logOut()
+    .then()
+    .catch()
+  };
+
   const navLinks = (
     <>
       <li>
@@ -52,12 +63,19 @@ const Navbar = () => {
         <div className="navbar-end">
           <label className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src={user} />
+              <img src={userDefaultPic} />
             </div>
           </label>
-          <button className="btn bg-black text-white">
-            <Link to="./login">Login</Link>
-          </button>
+
+          {user ? (
+            <button onClick={handleSingOut} className="btn">
+              Logout
+            </button>
+          ) : (
+            <button className="btn bg-black text-white">
+              <Link to="/login">Login</Link>
+            </button>
+          )}
         </div>
       </div>
     </div>
